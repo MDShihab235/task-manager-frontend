@@ -1,8 +1,22 @@
-# React + Vite
+Management App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Task manager app
 
-Currently, two official plugins are available:
+Task manager app is an app that manages tasks from an user. User can create update read and delete the task. User can view the specific task.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Authors
+
+- [@Mohammad Shihab Uddin](https://mohammad-shihab-uddin-portfolio.netlify.app/)
+
+## Features
+
+- CRUD(Create, Read, Update, Delete) operation for task.
+- User can create, update and delete a task.
+- User can search specific task.
+- View selected task.
+
+## Deployed Links
+
+- Server api link: https://task-manager-server-pece.onrender.com
+
+- Client side link: https://task-manager-frontend-coral-six.vercel.app/
