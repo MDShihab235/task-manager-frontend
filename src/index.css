@@ -5,3 +5,40 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100% !important;
+}
+
+.list-section {
+  .list-content {
+    > h1 {
+      font-size: 20px;
+      font-weight: 600;
+      padding: 10px;
+    }
+    > span {
+      font-size: 14px;
+      padding: 10px;
+    }
+  }
+}
+.buttons {
+  display: flex;
+  margin: 10px;
+  padding: 16px;
+  gap: 20px;
+}
+
+.list-content {
+  h1 {
+    color: rgb(95, 119, 255);
+  }
+  > p {
+    padding: 10px;
+    color: brown;
+  }
+}

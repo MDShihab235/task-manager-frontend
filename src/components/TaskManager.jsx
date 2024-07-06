@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
-import {
-  FaCheck,
-  FaPencilAlt,
-  FaPlus,
-  FaSearch,
-  FaTrash,
-} from "react-icons/fa";
+import { FaPlus, FaSearch } from "react-icons/fa";
 import { ToastContainer } from "react-toastify";
-import { CreateTask, DeleteTaskById, GetAllTasks, UpdateTaskById } from "./api";
-import { notify } from "./utils";
-// import TaskList from "./components/TaskList";
+import {
+  CreateTask,
+  DeleteTaskById,
+  GetAllTasks,
+  UpdateTaskById,
+} from "../api/api.js";
+import { notify } from "../api/utils.js";
 function TaskManager() {
   const [titleInput, setTitleInput] = useState("");
   const [descInput, setDescInput] = useState("");
@@ -101,7 +99,7 @@ function TaskManager() {
     const { _id, status, title, description } = item;
     const obj = {
       title,
-      status,
+      status: !status,
       description,
     };
     try {
@@ -124,7 +122,7 @@ function TaskManager() {
     const { _id, status, title, description } = item;
     const obj = {
       title,
-      status,
+      status: status,
       description,
     };
     try {
@@ -159,30 +157,10 @@ function TaskManager() {
       <h1 className="mb-4">Task Manager App</h1>
       {/* Input and Search box */}
       <div
-        className="d-flex justify-content-between
+        className="d-flex flex-column justify-content-between
             align-items-center mb-4 w-100"
       >
-        <div className="input-group flex-grow-1 me-2">
-          <input
-            type="text"
-            value={titleInput}
-            onChange={(e) => setTitleInput(e.target.value)}
-            className="form-control me-1"
-            placeholder="Add a new Task"
-          />
-          <input
-            type="text"
-            value={descInput}
-            onChange={(e) => setDescInput(e.target.value)}
-            className="form-control me-1"
-            placeholder="Add description"
-          />
-          <button onClick={handleTask} className="btn btn-success btn-sm me-2">
-            <FaPlus className="m-2" />
-          </button>
-        </div>
-
-        <div className="input-group flex-grow-1">
+        <div className="input-group flex-grow-1 mb-4 search-task">
           <span className="input-group-text">
             <FaSearch />
           </span>
@@ -193,57 +171,100 @@ function TaskManager() {
             placeholder="Search tasks"
           />
         </div>
+        <div className=" task-form">
+          <input
+            type="text"
+            value={titleInput}
+            onChange={(e) => setTitleInput(e.target.value)}
+            className="form-control "
+            placeholder="Add title"
+          />
+          {/* <input
+            type="text"
+            value={descInput}
+            onChange={(e) => setDescInput(e.target.value)}
+            className="form-control me-1"
+            placeholder="Add description"
+          /> */}
+          <textarea
+            className="form-control"
+            id="exampleFormControlTextarea1"
+            rows="3"
+            type="text"
+            value={descInput}
+            onChange={(e) => setDescInput(e.target.value)}
+            placeholder="Add description"
+          ></textarea>
+          <button onClick={handleTask} className="btn btn-success btn-sm me-2">
+            <FaPlus className="m-2" />
+            Add
+          </button>
+        </div>
       </div>
 
       {/* List of items */}
-      <div className="d-flex flex-column w-100">
-        {tasks?.map((item) => (
-          <div
-            key={item._id}
-            className="m-2 p-2 border bg-light
-                w-100 rounded-3 d-flex justify-content-between
-                align-items-center"
-          >
-            <span className={item.status ? "text-decoration-line-through" : ""}>
-              {item.title} {item.description}
-            </span>
+      <div className="d-flex flex-column flex-wrap  w-100">
+        {tasks?.map((item) => {
+          console.log(item);
+          return (
+            <div
+              key={item._id}
+              className="m-2 p-2 border bg-light
+                w-100 rounded-3 d-flex flex-column justify-content-between
+                align-items-center list-section"
+            >
+              <div className="list-content">
+                <h1
+                  className={item.status ? "text-decoration-line-through" : ""}
+                >
+                  <span className="headline">Title:</span> {item.title}
+                </h1>
+                <p
+                  className={item.status ? "text-decoration-line-through" : ""}
+                >
+                  <span className="headline">Description:</span>{" "}
+                  {item.description}
+                </p>
+              </div>
 
-            <div className="">
-              <button
-                onClick={() => handleCheckAndUncheck(item)}
-                className="btn btn-success
+              <div className="buttons">
+                <button
+                  onClick={() => handleCheckAndUncheck(item)}
+                  className={
+                    item.status
+                      ? "btn btn-secondary btn-sm me-2"
+                      : "btn btn-success btn-sm me-2"
+                  }
+                  type="button"
+                >
+                  {item.status ? "Completed" : "Not Completed"}
+                </button>
+                <button
+                  onClick={() => setUpdateTask(item)}
+                  className="btn btn-primary
                             btn-sm me-2"
-                type="button"
-              >
-                <FaCheck />
-              </button>
-              <button
-                onClick={() => setUpdateTask(item)}
-                className="btn btn-primary
+                  type="button"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDeleteTask(item._id)}
+                  className="btn btn-danger
                             btn-sm me-2"
-                type="button"
-              >
-                <FaPencilAlt />
-              </button>
-              <button
-                onClick={() => handleDeleteTask(item._id)}
-                className="btn btn-danger
-                            btn-sm me-2"
-                type="button"
-              >
-                <FaTrash />
-              </button>
+                  type="button"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
-
-      {/* <TaskList tasks={tasks} /> */}
 
       {/* Toastify */}
       <ToastContainer
         position="top-right"
-        autoClose={2000}
+        autoClose={1000}
         hideProgressBar={false}
       />
     </div>
